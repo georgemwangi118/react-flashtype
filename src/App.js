@@ -1,9 +1,13 @@
+import React from 'react';
 import './App.css';
+import Nav from './components/Nav/Nav';
+import Landing from './components/Landing/Landing';
 
 function App() {
   return (
-    <div className="App">
-      <h2>Hello</h2>
+    <div className="app">
+      <Nav />
+      <Landing />
     </div>
   );
 }
