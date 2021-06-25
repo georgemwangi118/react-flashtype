@@ -10,7 +10,6 @@
     flex-wrap: wrap;
 }
 
-.left {}
 
 .page-header {
     font-size: 50px;
@@ -21,9 +20,6 @@
 .typewriter-container {
     font-size: 30px;
     letter-spacing: 4px;
-}
-
-.right {
 }
 
 .heroImage {
