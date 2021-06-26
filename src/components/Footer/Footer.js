@@ -6,7 +6,7 @@ const Footer = () => {
         <div className="footerContainer">
             <a
                 className="footerLink"
-                href="georges1.netlify.app"
+                href="https://georges1.netlify.app/"
                 target="_blank"
                 rel="noreferrer"
             >
