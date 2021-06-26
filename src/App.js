@@ -6,19 +6,17 @@ import Challenge from './components/ChallengeSection/Challenge'
 import Footer from './components/Footer/Footer';
 import { SAMPLE_PARAGRAPHS } from './data/sampleParagraphs';
 
-const totalTime = 60;
-
-const serviceUrl = 'http://metaphorpsum.com/paragraphs/1/10';
+const totalTime = 120;
 
 const DefaultState = {
   selectedParagraph: "",
   timerStarted: false,
   timeRemaining: totalTime,
   words: 0,
-  character: 0,
+  characters: 0,
   wpm: 0,
   testInfo: [],
-}
+};
 class App extends Component {
   state = DefaultState;
 
@@ -27,67 +25,91 @@ class App extends Component {
       Math.floor(Math.random() * SAMPLE_PARAGRAPHS.length)
     ];
 
-    const selectedParagraphArray = data.split();
-    const testInfo = selectedParagraphArray.map(selectedLetter => {
+    const selectedParagraphArray = data.split("");
+    const testInfo = selectedParagraphArray.map((selectedLetter) => {
       return {
         testLetter: selectedLetter,
         status: "notAttempted",
       };
     });
 
-    this.setState({ ...DefaultState,testInfo, selectedParagraph: data });
+    //Update the testInfo in state
+    this.setState({ 
+      ...DefaultState,
+      testInfo, 
+      selectedParagraph: data, 
+    });
 
-  }
+  };
 
   fetchNewParagraph = () => {
-    fetch(serviceUrl)
+    fetch("http://metaphorpsum.com/paragraphs/1/9")
       .then(response => response.text())
       .then((data) => {
-        this.setState({ selectedParagraph: data });
+        // Once the api results are here, break the selectedParagraph into test info
 
-        const selectedParagraphArray = data.split();
-        const testInfo = selectedParagraphArray.map(selectedLetter => {
+        const selectedParagraphArray = data.split("");
+        const testInfo = selectedParagraphArray.map((selectedLetter) => {
           return {
             testLetter: selectedLetter,
             status: "notAttempted",
           };
         });
 
-        this.setState({ ...DefaultState,testInfo, selectedParagraph: data });
+        //Update the testInfo in state
+        this.setState({ 
+          ...DefaultState,
+          testInfo, 
+          selectedParagraph: data, 
+        });
       });
-  }
+  };
 
   componentDidMount() {
+    //As soon as the component mounts, load the selected paragraph from the API
     this.fetchNewParagraphFallback();
   }
+
+  startAgain = () => this.fetchNewParagraphFallback();
 
   startTimer = () => {
     this.setState({ timerStarted: true });
     const timer = setInterval(() => {
       if (this.state.timeRemaining > 0) {
 
-        //change the wpm
+        //change the wpm and time remaining
         const timeSpent = totalTime - this.state.timeRemaining;
         const wpm = 
           timeSpent > 0 ? (this.state.words / timeSpent) * totalTime : 0;
         this.setState({
-          timeRemaining: this.state.timerStarted - 1,
+          timeRemaining: this.state.timeRemaining - 1,
           wpm: parseInt(wpm),
         });
-
-        this.setState({
-          timeRemaining: this.state.timeRemaining - 1,
-        })
       } else {
         clearInterval(timer);
       }
-    }, 1000)
+    }, 1000);
   };
 
-  startAgain = () => this.fetchNewParagraphFallback();
 
   handleUserInput = (inputValue) => {
     if(!this.state.timerStarted) this.startTimer();
+
+    /**
+      * 1. Handle the underflow case - all characters should be shown as not-attempted
+      * 2. Handle the overflow case - early exit
+      * 3. Handle the backspace case
+      *      - Mark the [index+1] element as notAttempted
+      *        (irrespective of whether the index is less than zero)
+      *      - But, don't forget to check for the overflow here
+      *        (index + 1 -> out of bound, when index === length-1)
+      * 4. Update the status in test info
+      *      1. Find out the last character in the inputValue and it's index
+      *      2. Check if the character at same index in testInfo (state) matches
+      *      3. Yes -> Correct
+      *         No  -> Incorrect (Mistake++)
+      * 5. Irrespective of the case, characters, words and wpm can be updated
+      */
 
     //The Algorithm for underflow
     const characters = inputValue.length;
@@ -101,10 +123,10 @@ class App extends Component {
             testLetter: this.state.testInfo[0].testLetter,
             status: "notAttempted"
           },
-          ...this.state.testInfo.slice(1)
+          ...this.state.testInfo.slice(1),
         ],
         characters,
-        words
+        words,
       });
 
       return;
@@ -133,8 +155,8 @@ class App extends Component {
       testInfo,
       words,
       characters,
-    })
-  }
+    });
+  };
 
   render() {
     return (
@@ -144,7 +166,7 @@ class App extends Component {
         <Challenge 
           selectedParagraph={this.state.selectedParagraph}
           words={this.state.words}
-          character={this.state.character}
+          characters={this.state.characters}
           wpm={this.state.wpm}
           timeRemaining={this.state.timeRemaining}
           timerStarted={this.state.timerStarted}

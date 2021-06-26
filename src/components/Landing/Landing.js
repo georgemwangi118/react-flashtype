@@ -21,7 +21,7 @@ const Landing = () => {
                 <img data-aos="fade-left" className="heroImage" src="./images/hero.png" alt="hero" />
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Landing

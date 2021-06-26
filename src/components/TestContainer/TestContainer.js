@@ -6,7 +6,7 @@ import TypingChallengeContainer from '../TypingChallengeContainer/TypingChalleng
 const TestContainer = ({ 
     selectedParagraph,
     words,
-    character,
+    characters,
     wpm,
     timeRemaining,
     timerStarted,
@@ -17,6 +17,7 @@ const TestContainer = ({
 
     return (
         <div className="testContainer">
+            {/* Show the try again or start screen */}
             {
                 timeRemaining > 0 
                 ? 
@@ -26,7 +27,7 @@ const TestContainer = ({
                         timeRemaining={timeRemaining} 
                         timerStarted={timerStarted}
                         words={words} 
-                        character={character} 
+                        characters={characters} 
                         wpm={wpm} 
                         testInfo={testInfo} 
                         onInputChange={onInputChange}
@@ -36,7 +37,7 @@ const TestContainer = ({
                 (<div className="tryAgainContainer">
                     <TryAgain 
                         words={words} 
-                        character={character} 
+                        characters={characters} 
                         wpm={wpm} 
                         startAgain={startAgain}
                     />

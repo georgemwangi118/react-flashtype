@@ -5,7 +5,7 @@ import TestContainer from '../TestContainer/TestContainer';
 const Challenge = ({
     selectedParagraph,
     words,
-    character,
+    characters,
     wpm,
     timeRemaining,
     timerStarted,
@@ -23,14 +23,14 @@ const Challenge = ({
                 timeRemaining={timeRemaining} 
                 timerStarted={timerStarted}
                 words={words} 
-                character={character} 
+                characters={characters} 
                 wpm={wpm}
                 testInfo={testInfo}
                 onInputChange={onInputChange}
                 startAgain={startAgain}
             />
         </div>
-    )
-}
+    );
+};
 
-export default Challenge
+export default Challenge;

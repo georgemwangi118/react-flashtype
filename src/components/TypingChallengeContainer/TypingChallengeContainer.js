@@ -6,7 +6,7 @@ import TypingChallenge from '../TypingChallenge/TypingChallenge';
 const TypingChallengeContainer = ({ 
     selectedParagraph,
     words,
-    character,
+    characters,
     wpm,
     timeRemaining,
     timerStarted,
@@ -18,11 +18,11 @@ const TypingChallengeContainer = ({
             {/* Details section */}
             <div className="detailsContainer">
                 {/* Words typed */}
-                <DetailsCard cardName="words" cardValue={words} />
-                {/* Characters typed */}
-                <DetailsCard cardName="characters" cardValue={character} />
+                <DetailsCard cardName="Words" cardValue={words} />
+                {/* characters typed */}
+                <DetailsCard cardName="Characters" cardValue={characters} />
                 {/*speed*/}
-                <DetailsCard cardName="speed" cardValue={wpm} />
+                <DetailsCard cardName="WPM" cardValue={wpm} />
             </div>
 
             {/* The real challenge*/}

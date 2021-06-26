@@ -22,11 +22,11 @@ const TypingChallenge = ({
                 <div className="textarea-left">
                     <div className="textarea test-paragraph">
                         {/*{selectedParagraph}*/}
-                        {testInfo.map((individualLetterInfo, index) => {
-                            return( 
-                                <TestLetter key={index} individualLetterInfo={individualLetterInfo} /> 
-                            );
-                        })}
+                        {testInfo.map((individualLetterInfo, index) => (
+                            <TestLetter 
+                                key={index} individualLetterInfo={individualLetterInfo} 
+                            /> 
+                        ))}
                     </div>
                 </div>
                 <div className="textarea-right">
@@ -37,7 +37,7 @@ const TypingChallenge = ({
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default TypingChallenge
+export default TypingChallenge;
