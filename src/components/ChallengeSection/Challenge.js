@@ -8,7 +8,10 @@ const Challenge = ({
     character,
     wpm,
     timeRemaining,
-    timerStarted
+    timerStarted,
+    testInfo,
+    onInputChange,
+    startAgain
 }) => {
     return (
         <div className="challengeContainer">
@@ -18,9 +21,13 @@ const Challenge = ({
             <TestContainer
                 selectedParagraph={selectedParagraph}
                 timeRemaining={timeRemaining} 
+                timerStarted={timerStarted}
                 words={words} 
                 character={character} 
-                wpm={wpm} 
+                wpm={wpm}
+                testInfo={testInfo}
+                onInputChange={onInputChange}
+                startAgain={startAgain}
             />
         </div>
     )
